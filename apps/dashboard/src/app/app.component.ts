@@ -1,31 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
-import { KeycloakProfile } from 'keycloak-js';
 
 @Component({
   selector: 'mfa-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
-  public isLoggedIn = false;
-  public userProfile: KeycloakProfile | null = null;
+export class AppComponent {
 
-  constructor(private readonly keycloak: KeycloakService) {}
+  constructor(private keycloak: KeycloakService,) {}
 
-  public async ngOnInit() {
-    this.isLoggedIn = await this.keycloak.isLoggedIn();
-
-    if (this.isLoggedIn) {
-      this.userProfile = await this.keycloak.loadUserProfile();
-    }
-  }
-
-  public login() {
-    this.keycloak.login();
-  }
-
-  public logout() {
-    this.keycloak.logout();
+  public init() {
+    this.keycloak.init({
+      config: {
+        realm: 'angular-keycloak',
+        url: 'http://localhost:8080',
+        clientId: 'angular-keycloak-client'
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html'
+      }
+    }).then(
+      () => {
+        console.log('init successed');
+      },
+      (er) => {
+        console.log(er);
+      }
+    )
   }
 }
