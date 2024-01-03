@@ -1,28 +1,25 @@
 {
-  "name": "dashboard",
+  "name": "remote1",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "mfa",
-  "sourceRoot": "apps/dashboard/src",
+  "sourceRoot": "apps/remote1/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/dashboard",
-        "index": "apps/dashboard/src/index.html",
-        "main": "apps/dashboard/src/main.ts",
+        "outputPath": "dist/apps/remote1",
+        "index": "apps/remote1/src/index.html",
+        "main": "apps/remote1/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/dashboard/tsconfig.app.json",
-        "assets": [
-          "apps/dashboard/src/favicon.ico",
-          "apps/dashboard/src/assets"
-        ],
-        "styles": ["apps/dashboard/src/styles.css"],
+        "tsConfig": "apps/remote1/tsconfig.app.json",
+        "assets": ["apps/remote1/src/favicon.ico", "apps/remote1/src/assets"],
+        "styles": ["apps/remote1/src/styles.css"],
         "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/dashboard/webpack.config.ts"
+          "path": "apps/remote1/webpack.config.ts"
         }
       },
       "configurations": {
@@ -41,7 +38,7 @@
           ],
           "outputHashing": "all",
           "customWebpackConfig": {
-            "path": "apps/dashboard/webpack.prod.config.ts"
+            "path": "apps/remote1/webpack.prod.config.ts"
           }
         },
         "development": {
@@ -56,16 +53,17 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@nx/angular:module-federation-dev-server",
+      "executor": "@nx/angular:dev-server",
       "options": {
-        "publicHost": "http://localhost:4200"
+        "port": 4201,
+        "publicHost": "http://localhost:4201"
       },
       "configurations": {
         "production": {
-          "buildTarget": "dashboard:build:production"
+          "buildTarget": "remote1:build:production"
         },
         "development": {
-          "buildTarget": "dashboard:build:development"
+          "buildTarget": "remote1:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -73,7 +71,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "dashboard:build"
+        "buildTarget": "remote1:build"
       }
     },
     "lint": {
@@ -84,14 +82,24 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/dashboard/jest.config.ts"
+        "jestConfig": "apps/remote1/jest.config.ts"
       }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
       "options": {
-        "buildTarget": "dashboard:build",
-        "port": 4200
+        "buildTarget": "remote1:build",
+        "port": 4201,
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "remote1:build:development"
+        },
+        "production": {
+          "buildTarget": "remote1:build:production"
+        }
       }
     }
   }
