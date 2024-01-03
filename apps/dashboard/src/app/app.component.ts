@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+import { KeycloakService } from '@mfa/keycloak';
 import { KeycloakProfile } from 'keycloak-js';
 
 @Component({
