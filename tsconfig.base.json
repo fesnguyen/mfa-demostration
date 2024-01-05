@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@mfa/keycloak": ["libs/keycloak/src/index.ts"],
+      "articles/Routes": ["apps/articles/src/app/remote-entry/entry.routes.ts"],
       "remote1/Routes": ["apps/remote1/src/app/remote-entry/entry.routes.ts"]
     }
   },

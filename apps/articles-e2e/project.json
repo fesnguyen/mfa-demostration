@@ -1,0 +1,30 @@
+{
+  "name": "articles-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/articles-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/articles-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "articles:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "articles:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "articles:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["articles"]
+}
